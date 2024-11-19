@@ -84,6 +84,7 @@ export class MilvusVectorStore extends BaseVectorStore {
   private contentKey: string;
   private metadataKey: string;
   private embeddingKey: string;
+  private permissionKey: string;
 
   constructor(
     init?: Partial<{ milvusClient: MilvusClient }> &
@@ -100,6 +101,7 @@ export class MilvusVectorStore extends BaseVectorStore {
         contentKey?: string;
         metadataKey?: string;
         embeddingKey?: string;
+        permissionKey?: string;
       },
   ) {
     super(init);
@@ -129,6 +131,7 @@ export class MilvusVectorStore extends BaseVectorStore {
     this.contentKey = init?.contentKey ?? "content";
     this.metadataKey = init?.metadataKey ?? "metadata";
     this.embeddingKey = init?.embeddingKey ?? "embedding";
+    this.permissionKey = init?.permissionKey ?? "permission";
   }
 
   public client(): MilvusClient {
@@ -158,6 +161,10 @@ export class MilvusVectorStore extends BaseVectorStore {
         {
           name: this.metadataKey,
           data_type: DataType.JSON,
+        },
+        {
+          name: this.permissionKey,
+          data_type: DataType.Array,
         },
       ],
     });
